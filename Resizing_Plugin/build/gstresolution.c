@@ -66,17 +66,7 @@
 
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-#include <gst/video/gstvideometa.h>
-#include <gst/video/gstvideopool.h>
-#include <gst/gst.h>
-#include <gst/base/base.h>
-#include <gst/controller/controller.h>
-#include<gst/video/video.h>
-#include<stdlib.h>
-#include "gstresolution.h"
+#include "myheader.h"
 
 
 #define DEF_WIDTH 0
@@ -96,9 +86,9 @@
 #define SHEIGHT 1080
 #define MAXRANGE 2147483647
 
-GST_DEBUG_CATEGORY_STATIC (gst_resolution_debug);  //this macro is used to print the debug information during compilation and it is initialized with 
-						   //name ->gst_resolution_debug
-#define GST_CAT_DEFAULT gst_resolution_debug	//this helps to use default debug category to be used for logging debug messages within the plugin.
+GST_DEBUG_CATEGORY_STATIC (gst_resolution_debug); 
+						
+#define GST_CAT_DEFAULT gst_resolution_debug
 
 /*decalre a global flag for method selection*/
 gint flag,sflag;
