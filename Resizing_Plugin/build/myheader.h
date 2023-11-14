@@ -28,3 +28,8 @@
 #define SHEIGHT 1080
 #define MAXRANGE 2147483647
 
+/*decalre a global flag for method selection*/
+gint flag,sflag;
+
+GstCaps *scaling_caps;
+
