@@ -68,24 +68,6 @@
 
 #include "myheader.h"
 
-
-#define DEF_WIDTH 0
-#define DEF_HEIGHT 0
-#define DEF_X	0
-#define DEF_Y 	0
-
-#define TLX    	0
-#define TLY    	0
-#define TRX	320
-#define RTY	0
-#define BLX	0
-#define BLY	240
-#define BRX	320
-#define BRY	240
-#define SWIDTH	1920
-#define SHEIGHT 1080
-#define MAXRANGE 2147483647
-
 GST_DEBUG_CATEGORY_STATIC (gst_resolution_debug); 
 						
 #define GST_CAT_DEFAULT gst_resolution_debug
@@ -93,13 +75,7 @@ GST_DEBUG_CATEGORY_STATIC (gst_resolution_debug);
 /*decalre a global flag for method selection*/
 gint flag,sflag;
 
-/* Filter signals and args */
-enum
-{
-	/* FILL ME */
-	LAST_SIGNAL
-};
-
+/*properties of the  plugin*/
 enum
 {
 	PROP_0,
@@ -137,21 +113,12 @@ static GstStaticPadTemplate src_factory = GST_STATIC_PAD_TEMPLATE ("src",
 		GST_STATIC_CAPS ("ANY")
 		);
 
-#define gst_resolution_parent_class parent_class     //parent class is the place where our element is inherited
+#define gst_resolution_parent_class parent_class    
 G_DEFINE_TYPE (GstResolution, gst_resolution, GST_TYPE_ELEMENT); 
 
-/*this macro generates the necessary code to create and initialize the GObject-based class, including the associated class structure and constructor functions.
-  first argument is  the name of the custom element
-  second argument is the name of the structure that represents instances of your custom element type
-  third one represents type of the parent class from our element is derived*/
-
-//DEFINE_TYPE it defines structure of the class which is type of(BASE_SRC ,BASE_SINK). this was inherited from parent class.
-
 GST_ELEMENT_REGISTER_DEFINE (resolution, "resolution", GST_RANK_NONE,
-		GST_TYPE_RESOLUTION);	//the functionality of this macro function is will not register just define how and what to register our custom plugin				//name , nickmame, rank,type
+		GST_TYPE_RESOLUTION);	
 
-/* the flow of the code
-   first base_init() was called here the element was registerd*/
 static void gst_resolution_set_property (GObject * object,
 		guint prop_id, const GValue * value, GParamSpec * pspec);
 static void gst_resolution_get_property (GObject * object,
@@ -169,8 +136,7 @@ static gboolean gst_resolution_query (GstPad    *pad,
 		GstQuery  *query);
 		
 /* initialize the resolution's class */
-	static void
-gst_resolution_class_init (GstResolutionClass * klass)
+static void gst_resolution_class_init (GstResolutionClass * klass)
 {
 	g_print("class init function was called\n");
 
@@ -180,10 +146,6 @@ gst_resolution_class_init (GstResolutionClass * klass)
 
 	gobject_class = (GObjectClass *) klass;
 	gstelement_class = (GstElementClass *) klass;
-	trans_class = (GstBaseTransformClass *)klass;
-	if(trans_class==NULL)
-		g_print("failed\n");
-	g_print("value is %p\n",trans_class);
 
 
 	gobject_class->set_property = gst_resolution_set_property;    //these two are members of object class
