@@ -69,7 +69,7 @@
 #include "myheader.h"
 
 GST_DEBUG_CATEGORY_STATIC (gst_resolution_debug); 
-						
+
 #define GST_CAT_DEFAULT gst_resolution_debug
 
 /*properties of the  plugin*/
@@ -127,11 +127,11 @@ static gboolean gst_resolution_sink_event (GstPad * pad,
 static GstFlowReturn gst_resolution_chain (GstPad * pad,
 		GstObject * parent, GstBuffer * buf);
 
-		
+
 /* initialize the resolution's class */
 static void gst_resolution_class_init (GstResolutionClass * klass)
 {
-	g_print("class init function was called\n");
+//	g_print("class init function was called\n");
 
 	GObjectClass *gobject_class;
 	GstElementClass *gstelement_class;
@@ -151,70 +151,70 @@ static void gst_resolution_class_init (GstResolutionClass * klass)
 
 	g_object_class_install_property(gobject_class,PROP_WIDTH,
 			g_param_spec_int("width","Width","setting video frame crop width ",
-				0,MAXRANGE,DEF_WIDTH,G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS));
+				MINRANGE,MAXRANGE,DEF_WIDTH,G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS));
 
 	g_object_class_install_property(gobject_class,PROP_HEIGHT,
 			g_param_spec_int("height","Height","setting video frame crop  height",
-				0,MAXRANGE,DEF_HEIGHT,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+				MINRANGE,MAXRANGE,DEF_HEIGHT,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
 	g_object_class_install_property(gobject_class,PROP_X,
 			g_param_spec_int("x","Xcordinate","x cordinate value to crop the video ",
-				0,MAXRANGE,DEF_X,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));	
+				MINRANGE,MAXRANGE,DEF_X,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));	
 
 	g_object_class_install_property(gobject_class,PROP_Y,
 			g_param_spec_int("y","Ycordinate","y cordinate value to crop the video ",
-				0,MAXRANGE,DEF_Y,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));	
-				
+				MINRANGE,MAXRANGE,DEF_Y,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));	
+
 	/* adding properties of four corner coordinates
 	 * this is second method to crop the video 
 	 * in this we take all four corner input means 8 coordinates.
 	 * from these 8 coordinates width and height are calculated
 	 * tlx and tly are the coordinates of corner from where video frame is cropped
 	 */	
-    	
+
 	g_object_class_install_property(gobject_class,PROP_TLX,
-                        g_param_spec_int("tlx","TopleftX","top left x coordinate",
-                                0,MAXRANGE,TLX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-	
+			g_param_spec_int("tlx","TopleftX","top left x coordinate",
+				MINRANGE,MAXRANGE,TLX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 	g_object_class_install_property(gobject_class,PROP_TLY,
-                        g_param_spec_int("tly","TopleftY","top left y coordinate",
-                                0,1080,TLY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-	
+			g_param_spec_int("tly","TopleftY","top left y coordinate",
+				MINRANGE,MAXRANGE,TLY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 	g_object_class_install_property(gobject_class,PROP_TRX,
-                        g_param_spec_int("trx","ToprightX","top right x cordinate",
-                                1,MAXRANGE,TRX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-	
+			g_param_spec_int("trx","ToprightX","top right x cordinate",
+				MINRANGE,MAXRANGE,TRX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 	g_object_class_install_property(gobject_class,PROP_RTY,
-                        g_param_spec_int("rty","ToprightY","top right y coordinate",
-                                0,MAXRANGE,RTY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-	
+			g_param_spec_int("rty","ToprightY","top right y coordinate",
+				MINRANGE,MAXRANGE,RTY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 	g_object_class_install_property(gobject_class,PROP_BLX,
-                        g_param_spec_int("blx","BottomleftX","bottom left x coordinate",
-                                0,MAXRANGE,BLX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-	
+			g_param_spec_int("blx","BottomleftX","bottom left x coordinate",
+				MINRANGE,MAXRANGE,BLX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 	g_object_class_install_property(gobject_class,PROP_BLY,
-                        g_param_spec_int("bly","BottomleftY","bottom left y coordinate",
-                                1,MAXRANGE,BLY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-	
+			g_param_spec_int("bly","BottomleftY","bottom left y coordinate",
+				MINRANGE,MAXRANGE,BLY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 	g_object_class_install_property(gobject_class,PROP_BRX,
-                        g_param_spec_int("brx","BottomrightX","bottom right x coordinate",
-                                1,MAXRANGE,BRX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-	
+			g_param_spec_int("brx","BottomrightX","bottom right x coordinate",
+				MINRANGE,MAXRANGE,BRX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 	g_object_class_install_property(gobject_class,PROP_BRY,
-                        g_param_spec_int("bry","BottomrightY","bottom right y coordinate",
-                                1,MAXRANGE,BRY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-        
+			g_param_spec_int("bry","BottomrightY","bottom right y coordinate",
+				MINRANGE,MAXRANGE,BRY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 	/*these two properties swidth and sheight defines the desired width and height given by the user
 	 * to which the cropped video need to  resize.
 	 */
-        
+
 	g_object_class_install_property(gobject_class,PROP_SWIDTH,
-                        g_param_spec_int("swidth","Scalingwidth","new width to scale the video ",
-                                16,MAXRANGE,SWIDTH,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-        g_object_class_install_property(gobject_class,PROP_SHEIGHT,
-                        g_param_spec_int("sheight","Scalingheight","new height to scale the video",
-                                16,MAXRANGE,SHEIGHT,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-   
+			g_param_spec_int("swidth","Scalingwidth","new width to scale the cropped video minimum is 16 ",
+				MINRANGE,MAXRANGE,SWIDTH,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_SHEIGHT,
+			g_param_spec_int("sheight","Scalingheight","new height to scale the cropped video minimum is 16",
+				MINRANGE,MAXRANGE,SHEIGHT,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
 
 	gst_element_class_set_details_simple (gstelement_class,
 			"Resolution",
@@ -234,7 +234,7 @@ static void gst_resolution_class_init (GstResolutionClass * klass)
  */
 static void gst_resolution_init (GstResolution * filter)
 {
-	g_print("init funcn was called\n");
+	//GST_DEBUB_OBJECT(filter,"init funcn was called\n");
 	filter->sinkpad = gst_pad_new_from_static_template (&sink_factory, "sink");
 	gst_pad_set_event_function (filter->sinkpad,
 			GST_DEBUG_FUNCPTR (gst_resolution_sink_event));
@@ -248,13 +248,13 @@ static void gst_resolution_init (GstResolution * filter)
 
 	gst_element_add_pad (GST_ELEMENT (filter), filter->srcpad);
 
-	g_print("pads are created\n");
-	
+//	g_print("pads are created\n");
+
 	/*
 	 * setting properties to their default vlaues
 	 */
 
-	
+
 	filter->width = DEF_WIDTH;
 	filter->height = DEF_HEIGHT;
 	filter->x = DEF_X;
@@ -271,7 +271,7 @@ static void gst_resolution_init (GstResolution * filter)
 	filter->swidth = SWIDTH;
 	filter->sheight = SHEIGHT;
 
-	g_print("all the properties are set to default values\n");
+	//g_print("all the properties are set to default values\n");
 }
 
 static void gst_resolution_set_property (GObject * object, guint prop_id,const GValue * value, GParamSpec * pspec)
@@ -280,74 +280,146 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 
 	GstResolution *filter = GST_RESOLUTION (object);
 	switch (prop_id) {
-		
+
 		case PROP_HEIGHT:
 			filter->height = g_value_get_int (value);
+			if(filter->height<0)
+			{
+				g_warning("given height is invalid\n");
+				exit(1);
+			}
 			g_print("height value  is set\n");
+			sflag=1;
 			break;
 		case PROP_WIDTH:
 			filter->width = g_value_get_int(value);
+			if(filter->width<0)
+			{
+				g_warning("given width is invalid\n");
+				exit(1);
+			}
+			sflag=1;
 			g_print("the value is set to :%d\n",g_value_get_int(value));
 			break;
 		case PROP_X:
 			filter->x = g_value_get_int(value);
+			if(filter->x<0)
+			{
+				g_warning("given x coordinate is invalid\n");
+				exit(1);
+			}
 			sflag=1;
 			g_print("the value of coordinates are set\n");
 			break;
 		case PROP_Y:
 			filter->y = g_value_get_int(value);
+			if(filter->height<0)
+			{
+				g_warning("given y is invalid\n");
+				exit(1);
+			}
 			sflag=1;
 			g_print("the value of y coordinates are set\n");
 			break;	
-		/* coordinate properties */
-		
+			/* coordinate properties */
+
 		case PROP_TLX:
 			filter->tlx = g_value_get_int(value);
+			if(filter->tlx<0)
+			{
+				g_warning("given tlx is invalid\n");
+				exit(1);
+			}
 			flag=1;
 			g_print("the value of tlx is set to :%d\n",filter->tlx);
 			break;	
 		case PROP_TLY:
 			filter->tly = g_value_get_int(value);
+			if(filter->tly<0)
+			{
+				g_warning("given tly is invalid\n");
+				exit(1);
+			}
 			flag=1;
 			g_print("the value of tly is set to :%d\n",filter->tly);
 			break;	
 		case PROP_TRX:
 			filter->trx = g_value_get_int(value);
+			if(filter->trx<1)
+			{
+				g_warning("given trx is invalid\n");
+				exit(1);
+			}
 			flag=1;
 			g_print("the value of trx is set to :%d\n",filter->trx);
 			break;	
 		case PROP_RTY:
 			filter->rty = g_value_get_int(value);
+			if(filter->rty<0)
+			{
+				g_warning("given rty is invalid\n");
+				exit(1);
+			}
 			flag=1;
 			g_print("the value of rty is set to :%d\n",filter->rty);
 			break;	
 		case PROP_BLX:
 			filter->blx = g_value_get_int(value);
+			if(filter->blx<0)
+			{
+				g_warning("given blx is invalid\n");
+				exit(1);
+			}
 			flag=1;
 			g_print("the value of blx is set to :%d\n",filter->blx);
 			break;	
 		case PROP_BLY:
 			filter->bly = g_value_get_int(value);
+			if(filter->bly<1)
+			{
+				g_warning("given bly is invalid\n");
+				exit(1);
+			}
 			flag=1;
 			g_print("the value of bly is set to :%d\n",filter->bly);
 			break;	
 		case PROP_BRX:
 			filter->brx = g_value_get_int(value);
+			if(filter->brx<1)
+			{
+				g_warning("given brx is invalid\n");
+				exit(1);
+			}
 			flag=1;
 			g_print("the value of brx is set to :%d\n",filter->brx);
 			break;	
 		case PROP_BRY:
 			filter->bry = g_value_get_int(value);
+			if(filter->bry<1)
+			{
+				g_warning("given bry is invalid\n");
+				exit(1);
+			}
 			flag=1;
 			g_print("the value of bry is set to :%d\n",filter->bry);
 			break;
 		case PROP_SWIDTH:
 			filter->swidth = g_value_get_int(value);
+			if(filter->swidth<16)
+			{
+				g_warning("given swidth is invalid less than 16\n");
+				exit(1);
+			}
 			g_print("new width value to scale :%d\n",filter->swidth);
-
+		
 			break;	
 		case PROP_SHEIGHT:
 			filter->sheight = g_value_get_int(value);
+			if(filter->sheight<16)
+			{
+				g_warning("given sheight is invalid less than 16\n");
+				exit(1);
+			}
 			g_print("new height value to scale:%d\n",filter->sheight);
 			break;
 		default:
@@ -362,7 +434,7 @@ static void gst_resolution_get_property (GObject * object, guint prop_id,GValue 
 	GstResolution *filter = GST_RESOLUTION (object);
 
 	switch (prop_id) {
-		
+
 		case PROP_HEIGHT:
 			g_value_set_int (value, filter->height);
 			break;
@@ -377,31 +449,31 @@ static void gst_resolution_get_property (GObject * object, guint prop_id,GValue 
 			break;
 		case PROP_TLX:
 			g_value_set_int(value,filter->tlx);
-                        break;
-                case PROP_TLY:
+			break;
+		case PROP_TLY:
 			g_value_set_int(value,filter->tly);
-                        break;
-                case PROP_TRX:
+			break;
+		case PROP_TRX:
 			g_value_set_int(value,filter->tlx);
-                        break;
-                case PROP_RTY:
+			break;
+		case PROP_RTY:
 			g_value_set_int(value,filter->rty);
-                        break;
-                case PROP_BLX:
+			break;
+		case PROP_BLX:
 			g_value_set_int(value,filter->blx);
-                        break;
-                case PROP_BLY:
+			break;
+		case PROP_BLY:
 			g_value_set_int(value,filter->bly);
-                        break;
-                case PROP_BRX:
+			break;
+		case PROP_BRX:
 			g_value_set_int(value,filter->brx);
-                        break;
-                case PROP_BRY:
+			break;
+		case PROP_BRY:
 			g_value_set_int(value,filter->bry);
-                        break;
+			break;
 		case PROP_SWIDTH:
 			g_value_set_int(value,filter->swidth);
-                        break;
+			break;
 		case PROP_SHEIGHT:
 			g_value_set_int(value,filter->sheight);
 			break;
@@ -416,7 +488,7 @@ static void gst_resolution_get_property (GObject * object, guint prop_id,GValue 
 /* this function handles sink events */
 static gboolean gst_resolution_sink_event (GstPad * pad, GstObject * parent,GstEvent * event)
 {
-	g_print("caps event called\n");
+    //	g_print("caps event called\n");
 	GstResolution *filter;
 	gboolean ret;
 	filter = GST_RESOLUTION (parent);
@@ -427,7 +499,7 @@ static gboolean gst_resolution_sink_event (GstPad * pad, GstObject * parent,GstE
 			{
 				GstCaps *caps;
 				gst_event_parse_caps (event, &caps);
-			//	ret = gst_pad_event_default (pad, parent, event);
+				//	ret = gst_pad_event_default (pad, parent, event);
 				break;
 			}
 		default:
@@ -441,16 +513,35 @@ static gboolean gst_resolution_sink_event (GstPad * pad, GstObject * parent,GstE
  * this function does the actual processing
  */
 static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, GstBuffer * buf)
-{
+{       
+	
+	
+	/*here checking will happen, as this plugin contains two methods to crop the incoming video
+         * we have initialised two flags which are set to ZERO initially, when properties of particular  method are set 
+         * that particular flag is set to ONE.
+         * if both flags are set to ONE indicates both methods are selected which is invalid
+         * if both the properties are not by default it uses the first method with default values
+         */
+
+        if(sflag==1 && flag==1)
+        {
+                g_warning(" BOTH THE METHODS ARE SELECTED\n");
+                g_print(" This  plugin follows two methods to crop the incoming video\n");
+                g_print("\t1.By setting x,y,width and height properties\n");
+                g_print("\t2.And providing all the four corner coordinates\n");
+                g_print("both methods properties of resolution element are set, choose only one\n");
+                return GST_FLOW_ERROR;
+        }
+
 	GstResolution *filter;
 	filter = GST_RESOLUTION (parent);
-	
+
 	gint in_width,in_height;
 	GstCaps *caps;
 	gint size;
 	gint new_buf_width;
 	gint new_buf_height;
-	
+
 	/*
 	 * these buffer_new , video_info_new,vframe_new
 	 * are uesd for new buffer which is cropped from main buffer
@@ -459,29 +550,15 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	GstBuffer *buffer_new = NULL;
 	GstVideoInfo video_info_new;
 	GstVideoFrame vframe_new;
-	
+
 	g_print("------------------------------------------------------------------------\n");
 	
-	/*here checking will happen, as this plugin contains two methods to crop the incoming video
-	 * we have initialised two flags which are set to ZERO initially, when properties of particular  method are set 
-	 * that particular flag is set to ONE.
-	 * if both flags are set to ONE indicates both methods are selected which is invalid
-	 * if both the properties are not by default it uses the first method with default values
-	 */
-	
-	
-	if(sflag==1 && flag==1)
-	{
-		g_print("     WARNING    \n");
-		g_print(" This  plugin follows two methods to crop the incoming video\n");
-		g_print("\t1.By setting x,y,width and height properties\n");
-		g_print("\t2.And providing all the four corner coordinates\n");
-		g_print("you have selected both methods\n	Pipeline dosen't preroll\n");
-		g_print("both methods properties of resolution element are set, choose only one\n");
-		return GST_FLOW_ERROR;	
-	}
-	
-	/*here incaps indicates incoming capababilites of th video
+	if(filter->swidth==0)
+		filter->swidth=1920;
+	if(filter->sheight==0)
+		filter->sheight=1080;
+
+	/*here incaps indicates incoming capabilites of th video
 	 * which were retrived from pad
 	 */
 
@@ -493,26 +570,26 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	 */
 
 
-       	gst_structure_get(structure,"width",G_TYPE_INT,&in_width,NULL);
-	
+	gst_structure_get(structure,"width",G_TYPE_INT,&in_width,NULL);
+
 	gst_structure_get(structure,"height",G_TYPE_INT,&in_height,NULL);
-	
+
 	/* by default first method is selected 
 	 * if width and heigth are given by the user to crop they will assign 
 	 * else incoming video width and height are used which copies whole data
 	 */
-
+	
 	if(filter->width==0)
 		filter->width=in_width;
 	if(filter->height==0)
 		filter->height=in_height;
 
-	 new_buf_width = filter->width;
-	 new_buf_height = filter->height;
-	
+	new_buf_width = filter->width;
+	new_buf_height = filter->height;
+
 	g_print("incoming width and height are :%d %d\n",in_width,in_height);
 	g_print("croping width and height are :%d %d\n",filter->width,filter->height);
-	
+
 	/* here a boundary is checked 
 	 * suppose the user desired to crop the incoming video with certain width and height
 	 * which are greater than incoming ones, it is an invalid operation
@@ -525,27 +602,27 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 		g_print("please inspect the element for properties 'width' and 'height'\n");
 		return GST_FLOW_ERROR;	
 	}	
-	
+
 	gst_structure_set(structure , "width",G_TYPE_INT,filter->swidth,"height",G_TYPE_INT,filter->sheight,"format",G_TYPE_STRING,"YV12",NULL);
-	
-	
+
+
 	/* based on the method selected by the user, the height and width are calculated and with that width and height 
 	 * we are setting the caps for new buffer(cropped buffer), with these caps new buffer is created which
 	 * is store the cropped data.
 	 * flag=0 indicates normal method else second method
 	 */
-
+//	g_print("flag value %d\n",flag);
 	if(flag !=1)
 	{
 		caps = gst_caps_new_simple("video/x-raw",
-			"format", G_TYPE_STRING, "YV12",
-			"width", G_TYPE_INT, new_buf_width,
-			"height", G_TYPE_INT,new_buf_height,
-			"bpp", G_TYPE_INT, 12,
-			NULL);
+				"format", G_TYPE_STRING, "YV12",
+				"width", G_TYPE_INT, new_buf_width,
+				"height", G_TYPE_INT,new_buf_height,
+				"bpp", G_TYPE_INT, 12,
+				NULL);
 
 		/* size of the buffer is calculated using width*height*(bits per pixle)*/
-		
+
 		size = new_buf_width * new_buf_height * (1.5);
 	}
 	else{
@@ -557,61 +634,61 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 			g_print("try to give the approriate coordinated\n");
 			return GST_FLOW_ERROR;
 		}
-		
+
 		/* calculating width and height using coordinates*/
 
 		gint width = (filter->trx - filter->tlx);
 		gint height = (filter->bly - filter->tly);
 		g_print("width and height from coordinates %d  %d\n",width,height);
-			
+
 		caps = gst_caps_new_simple("video/x-raw",
-			"format", G_TYPE_STRING, "YV12",
-			"width", G_TYPE_INT,width,
-			"height", G_TYPE_INT,height,
-			"bpp", G_TYPE_INT, 12,
-			NULL);
-			size = width * height * (1.5);
+				"format", G_TYPE_STRING, "YV12",
+				"width", G_TYPE_INT,width,
+				"height", G_TYPE_INT,height,
+				"bpp", G_TYPE_INT, 12,
+				NULL);
+		size = width * height * (1.5);
 	}
-	
-			
+
+
 	/************scaling caps********************/
 	/*GstCaps *scaps = gst_caps_new_simple("video/x-raw",
-			"format", G_TYPE_STRING, "YV12",
-			"width", G_TYPE_INT, filter->swidth,
-			"height", G_TYPE_INT,filter->sheight,
-			"bpp", G_TYPE_INT, 12,
-			NULL);*/
-	
+	  "format", G_TYPE_STRING, "YV12",
+	  "width", G_TYPE_INT, filter->swidth,
+	  "height", G_TYPE_INT,filter->sheight,
+	  "bpp", G_TYPE_INT, 12,
+	  NULL);*/
+
 	/*******************************************************************************
-	 * ****************************************************************************
 	 *  creating and mapping the newly created buffer *****************************/
 
 	buffer_new= gst_buffer_new_allocate(NULL, size, NULL );
-	
+
 	if (!gst_buffer_make_writable(buffer_new)) {
 		g_print("Failed to make the buffer writable\n");
 		gst_buffer_unref(buffer_new);
 		return GST_FLOW_ERROR;
 	}
-	
+
 	/* getting the video info to map the video frame*/
 
 	if(!gst_video_info_from_caps(&video_info_new, caps))
 	{
-		g_print("fail to map videoinfo for cropping \n");
+		g_print("fail to get videoinfo for cropping buffer \n");
 		return GST_FLOW_ERROR;
 	}
 	/* mapping video frame */
 	if(!gst_video_frame_map(&vframe_new, &video_info_new, buffer_new, GST_MAP_WRITE))
 	{
-		g_print("fail to map videoframe for croping\n");
+		g_warning("give standard resolution to crop\n");
+		g_print("fail to map videoframe for croping buffer\n");
 		return GST_FLOW_ERROR;
 	}
-	
+
 	/* as we know the incoming video is of YV12 format there will be three planes 
 	 * getting video data, stride and pixel stride data using videoframe
 	 */
-	
+
 	guint8 *y_pixels_new = GST_VIDEO_FRAME_PLANE_DATA(&vframe_new, 0); // Y plane
 	guint8 *u_pixels_new = GST_VIDEO_FRAME_PLANE_DATA(&vframe_new, 1); // U plane 
 	guint8 *v_pixels_new = GST_VIDEO_FRAME_PLANE_DATA(&vframe_new, 2);  //V plane
@@ -625,7 +702,6 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	guint pixel_stride_new_v = GST_VIDEO_FRAME_COMP_PSTRIDE(&vframe_new, 2);
 
 	/**********************************************************************************
-	 * ********************************************************************************
 	 *************** mapping the orginal buffer to read the data from it **************/
 
 	GstVideoInfo video_info_org;
@@ -633,10 +709,10 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 	if(!gst_video_info_from_caps(&video_info_org, gst_pad_get_current_caps(pad)))
 	{
-		g_print("fail to map videoinfo of original buf\n");
+		g_print("fail to get videoinfo of original buf\n");
 		return GST_FLOW_ERROR;
 	}
-	
+
 	if(!gst_video_frame_map(&vframe_org, &video_info_org, buf, GST_MAP_READ))
 	{
 		g_print("fail to map videoframe of original buf\n");
@@ -656,33 +732,33 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	guint pixel_stride_org_v = GST_VIDEO_FRAME_COMP_PSTRIDE(&vframe_org, 2);
 
 	gint width_org = GST_VIDEO_FRAME_WIDTH(&vframe_org);
-        gint height_org = GST_VIDEO_FRAME_HEIGHT(&vframe_org);
-        
+	gint height_org = GST_VIDEO_FRAME_HEIGHT(&vframe_org);
+
 	g_print("flag vlaue is :%d\n",flag);
-	
+
 	/*
 	 * based on the method selected the widht height and coordinates(top left) are  calculate to copy the data
 	 * from original buffer to newly created buffer
 	 */
 
 	gint widtH , heighT,x,y,bottom,right;
-	
+
 	if(flag !=1)
 	{
 		g_print("selected first method\n");
 		widtH = filter->width;
 		heighT = filter->height;
-	
-	 x = filter->x;
-	 y = filter->y;
-	 g_print("x and y coordinates are :%d %d\n",x,y);
-	 g_print("width and height from coordinates %d  %d\n",widtH,heighT);
 
-	// Calculate the coordinates of the top-left and bottom-right corners
-	 bottom = y + heighT;
-         right = x + widtH;
-	g_print("rect bot:%d    rect right:%d\n",bottom,right);
-	
+		x = filter->x;
+		y = filter->y;
+		g_print("x and y coordinates are :%d %d\n",x,y);
+		g_print("width and height from coordinates %d  %d\n",widtH,heighT);
+
+		// Calculate the coordinates of the top-left and bottom-right corners
+		bottom = y + heighT;
+		right = x + widtH;
+		g_print("rect bot:%d    rect right:%d\n",bottom,right);
+
 		if((x+widtH)>width_org || (y+heighT)>height_org)
 		{
 			g_print("WARNING OUT OF BOUNDARY\n");
@@ -691,26 +767,26 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	}	
 	else
 	{
-			g_print("second method is selected\n");
-	
-			widtH = (filter->trx - filter->tlx);
-			heighT = (filter->bly - filter->tly);
-			x = filter->tlx ;
-			y = filter->tly;
-			
-			g_print("x and y coordinates are :%d %d\n",x,y);
-			g_print("width and height from coordinates %d  %d\n",widtH,heighT);
-			bottom = y+heighT;
-        		right  = x+widtH;
-        		g_print("rect bot:%d    rect right:%d\n",bottom,right);
-			
+		g_print("second method is selected\n");
+
+		widtH = (filter->trx - filter->tlx);
+		heighT = (filter->bly - filter->tly);
+		x = filter->tlx ;
+		y = filter->tly;
+
+		g_print("x and y coordinates are :%d %d\n",x,y);
+		g_print("width and height from coordinates %d  %d\n",widtH,heighT);
+		bottom = y+heighT;
+		right  = x+widtH;
+		g_print("rect bot:%d    rect right:%d\n",bottom,right);
+
 		if((x+widtH)>width_org || (y+heighT)>height_org)
 		{
 			g_print("WARNING OUT OF BOUNDARY\n");
 			return GST_FLOW_ERROR;
 		}
 	}
-	
+
 	/* this part of code will copy the data from the input buffer to new buffer
 	 * here h1,w1 will start from zero indicates new buffer which accepts data
 	 * and h2,w2 are coordinates of the original buffer from that starts sharing 
@@ -719,35 +795,35 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 
 	guint8 *y_pixel,*u_pixel,*v_pixel,*p_y_pixel,*p_u_pixel,*p_v_pixel;
-	
-	gint h1=0,w1=0,h2=0,w2=0;
-		
-		for(h1=0,h2=y;h1<heighT && h2< bottom ;h1++,h2++)
-		{
-			for(w1=0,w2=x;w1<widtH && w2 < right;w1++,w2++)
-			{
-				/* calculating offeset of each pixel in three planes for new buffer*/
-				y_pixel = y_pixels_new + h1 * y_stride_new + w1 * pixel_stride_new;
-				u_pixel = u_pixels_new + h1 / 2 * u_stride_new + (w1 / 2) * pixel_stride_new_u;
-				v_pixel = v_pixels_new + h1 / 2 * v_stride_new + (w1 / 2) * pixel_stride_new_v;
-				
-				/* calculating offset of each pixel in three planes of original buffer*/
-				p_y_pixel = y_pixels_org + h2 * y_stride_org + w2 * pixel_stride_org;
-				p_u_pixel = u_pixels_org + h2 / 2 * u_stride_org + (w2 / 2) * pixel_stride_org_u;
-				p_v_pixel = v_pixels_org + h2 / 2 * v_stride_org + (w2 / 2) * pixel_stride_org_v;
-				
-				/* data transfering */
-				if (w2 >= x && w2 < right && h2 >= y && h2 < bottom) 
-				{
-					y_pixel[0]=p_y_pixel[0];
-					u_pixel[0]=p_u_pixel[0];
-					v_pixel[0]=p_v_pixel[0];
-				}
 
+	gint h1=0,w1=0,h2=0,w2=0;
+
+	for(h1=0,h2=y;h1<heighT && h2< bottom ;h1++,h2++)
+	{
+		for(w1=0,w2=x;w1<widtH && w2 < right;w1++,w2++)
+		{
+			/* calculating offeset of each pixel in three planes for new buffer*/
+			y_pixel = y_pixels_new + h1 * y_stride_new + w1 * pixel_stride_new;
+			u_pixel = u_pixels_new + h1 / 2 * u_stride_new + (w1 / 2) * pixel_stride_new_u;
+			v_pixel = v_pixels_new + h1 / 2 * v_stride_new + (w1 / 2) * pixel_stride_new_v;
+
+			/* calculating offset of each pixel in three planes of original buffer*/
+			p_y_pixel = y_pixels_org + h2 * y_stride_org + w2 * pixel_stride_org;
+			p_u_pixel = u_pixels_org + h2 / 2 * u_stride_org + (w2 / 2) * pixel_stride_org_u;
+			p_v_pixel = v_pixels_org + h2 / 2 * v_stride_org + (w2 / 2) * pixel_stride_org_v;
+
+			/* data transfering */
+			if (w2 >= x && w2 < right && h2 >= y && h2 < bottom) 
+			{
+				y_pixel[0]=p_y_pixel[0];
+				u_pixel[0]=p_u_pixel[0];
+				v_pixel[0]=p_v_pixel[0];
 			}
 
 		}
-	
+
+	}
+
 	/* upto now croping is done 
 	 * the below part of code will resizes the cropped data into particular resolution
 	 * depending on the property values of swidth and sheight set by the user.
@@ -758,9 +834,9 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 	GstVideoInfo video_info_scale;
 	GstVideoFrame vframe_scale;
-	
+
 	gsize s_size = (filter->swidth)*(filter->sheight)*(1.5);
-	
+
 	/* creating scaling buffer*/
 	GstBuffer *mybuf= gst_buffer_new_allocate(NULL, s_size, NULL );
 
@@ -773,31 +849,24 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 	//gst_structure_set(structure , "width",G_TYPE_INT,filter->swidth,"height",G_TYPE_INT,filter->sheight,"format",G_TYPE_STRING,"YV12",NULL);
 	g_print("scaling buffer width and height are :%d %d\n",filter->swidth,filter->sheight);
-	
+
 	if (!gst_buffer_make_writable(mybuf)) {
 		g_print("Failed to make the buffer writable\n");
 		gst_buffer_unref(mybuf);
-		return -1;
+		return GST_FLOW_ERROR;
 	}
 
-	if(gst_video_info_from_caps(&video_info_scale, incaps))
+	if(!gst_video_info_from_caps(&video_info_scale, incaps))
 	{
-		//g_print("Successfully videoinfo is mapped\n");
-	}
-	else
-	{
-		g_print("failure videoinfo is map\n");
+		g_print("fail to get videoinfo for scaling buf\n");
+		return GST_FLOW_ERROR;
 	}
 
-	if(gst_video_frame_map(&vframe_scale, &video_info_scale, mybuf, GST_MAP_WRITE))
+	if(!gst_video_frame_map(&vframe_scale, &video_info_scale, mybuf, GST_MAP_WRITE))
 	{
-		//g_print("Successfully videoframe is mapped\n");
+		g_print("failed to map videoframe for scaling buf\n");
+		return GST_FLOW_ERROR;
 	}
-	else
-	{
-		g_print("fail to map\n");
-	}
-
 
 	guint8 *y_pixels_scale = GST_VIDEO_FRAME_PLANE_DATA(&vframe_scale, 0); // Y plane
 	guint8 *u_pixels_scale = GST_VIDEO_FRAME_PLANE_DATA(&vframe_scale, 1); // U plane (interleaved)
@@ -822,9 +891,9 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 			//this is nearest neighbour algorithm
 			gint new_x = (w*widtH)/filter->swidth;
 			gint new_y = (h*heighT)/filter->sheight;
-			
-			
-			
+
+
+
 			guint8 *y_pixel = y_pixels_new + new_y * y_stride_new + new_x * pixel_stride_new;
 			guint8 *u_pixel = u_pixels_new + (new_y/2)  * u_stride_new + (new_x/2) * pixel_stride_new_u;
 			guint8 *v_pixel = v_pixels_new + (new_y/2)  * v_stride_new + (new_x/2)  * pixel_stride_new_v;
@@ -833,39 +902,42 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 			guint8 *y_pixel_o = y_pixels_scale + h * y_stride_scale + w * pixel_stride_scale;
 			guint8 *u_pixel_o = u_pixels_scale + (h/2)  * u_stride_scale + (w/2) * pixel_stride_scale_u;
 			guint8 *v_pixel_o = v_pixels_scale + (h/2)  * v_stride_scale + (w/2) * pixel_stride_scale_v;
-			
+
 			y_pixel_o[0] = y_pixel[0];
 			u_pixel_o[0] = u_pixel[0];
 			v_pixel_o[0] = v_pixel[0];
-	
+
 		}
 	}
-	
-		/** if we want use predefined algorithm uncomment the below and comment 
-		 * nearest neighbour algorithm
-		 */
+
+	/** if we want use predefined algorithm uncomment the below and comment 
+	 * nearest neighbour algorithm
+	 */
 
 	/*	GstSample *samp = gst_sample_new (buffer_new,caps,NULL,NULL);
- 		if(!samp)
- 		{
- 			g_print("failed to create the sample\n");
- 		}
- 		GstSample *sample = gst_video_convert_sample(samp,scaps,GST_CLOCK_TIME_NONE ,NULL);
- 		if(!sample)
- 		{
- 			g_print("failed to convert the sample\n");
- 		}
- 		
- 		GstBuffer *mybuf = gst_sample_get_buffer(sample);*/
+		if(!samp)
+		{
+		g_print("failed to create the sample\n");
+		}
+		GstSample *sample = gst_video_convert_sample(samp,scaps,GST_CLOCK_TIME_NONE ,NULL);
+		if(!sample)
+		{
+		g_print("failed to convert the sample\n");
+		}
+
+		GstBuffer *mybuf = gst_sample_get_buffer(sample);*/
 
 	gst_pad_set_caps(filter->srcpad , incaps);
-
-//	gst_pad_set_caps(filter->srcpad , caps);
+	
+	/* this is used when using sample function*/
+	//gst_pad_set_caps(filter->srcpad , caps);
 
 	gst_video_frame_unmap(&vframe_new);	
 	gst_video_frame_unmap(&vframe_scale);	
+	
 
-//	return gst_pad_push (filter->srcpad, buffer_new);
+	/*this is used when using sample function*/
+	//return gst_pad_push (filter->srcpad, buffer_new);
 	return gst_pad_push (filter->srcpad, mybuf);
 }
 
@@ -874,10 +946,9 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
  * initialize the plug-in itself
  * register the element factories and other features
  */
- 
+
 static gboolean resolution_init (GstPlugin * resolution)
 {
-	g_print("resolution init\n");
 	/* debug category for filtering log messages				
 	 *
 	 * exchange the string 'Template resolution' with your description

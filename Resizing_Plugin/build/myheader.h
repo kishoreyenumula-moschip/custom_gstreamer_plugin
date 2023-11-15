@@ -18,15 +18,16 @@
 
 #define TLX     0
 #define TLY     0
-#define TRX     320
+#define TRX     1 
 #define RTY     0
 #define BLX     0
-#define BLY     240
-#define BRX     320
-#define BRY     240
-#define SWIDTH  1920
-#define SHEIGHT 1080
+#define BLY     1
+#define BRX     1
+#define BRY     1
+#define SWIDTH  0
+#define SHEIGHT 0
 #define MAXRANGE 2147483647
+#define MINRANGE -2147483648
 
 /*decalre a global flag for method selection*/
 gint flag,sflag;
