@@ -131,7 +131,7 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad,
 /* initialize the resolution's class */
 static void gst_resolution_class_init (GstResolutionClass * klass)
 {
-//	g_print("class init function was called\n");
+	g_debug("class init function was called\n");
 
 	GObjectClass *gobject_class;
 	GstElementClass *gstelement_class;
@@ -248,7 +248,7 @@ static void gst_resolution_init (GstResolution * filter)
 
 	gst_element_add_pad (GST_ELEMENT (filter), filter->srcpad);
 
-//	g_print("pads are created\n");
+		g_debug("pads are created\n");
 
 	/*
 	 * setting properties to their default vlaues
@@ -271,12 +271,12 @@ static void gst_resolution_init (GstResolution * filter)
 	filter->swidth = SWIDTH;
 	filter->sheight = SHEIGHT;
 
-	//g_print("all the properties are set to default values\n");
+	g_debug("all the properties are set to default values\n");
 }
 
 static void gst_resolution_set_property (GObject * object, guint prop_id,const GValue * value, GParamSpec * pspec)
 {
-	//g_print("set property function was called\n");
+	g_debug("set property function was called\n");
 
 	GstResolution *filter = GST_RESOLUTION (object);
 	switch (prop_id) {
@@ -288,7 +288,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				g_warning("given height is invalid\n");
 				exit(1);
 			}
-			g_print("height value  is set\n");
+			g_debug("height value  is set\n");
 			sflag=1;
 			break;
 		case PROP_WIDTH:
@@ -299,7 +299,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			sflag=1;
-			g_print("the value is set to :%d\n",g_value_get_int(value));
+			g_debug("the value is set to :%d\n",g_value_get_int(value));
 			break;
 		case PROP_X:
 			filter->x = g_value_get_int(value);
@@ -309,7 +309,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			sflag=1;
-			g_print("the value of coordinates are set\n");
+			g_debug("the value of coordinates are set\n");
 			break;
 		case PROP_Y:
 			filter->y = g_value_get_int(value);
@@ -319,7 +319,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			sflag=1;
-			g_print("the value of y coordinates are set\n");
+			g_debug("the value of y coordinates are set\n");
 			break;	
 			/* coordinate properties */
 
@@ -331,7 +331,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			flag=1;
-			g_print("the value of tlx is set to :%d\n",filter->tlx);
+			g_debug("the value of tlx is set to :%d\n",filter->tlx);
 			break;	
 		case PROP_TLY:
 			filter->tly = g_value_get_int(value);
@@ -341,7 +341,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			flag=1;
-			g_print("the value of tly is set to :%d\n",filter->tly);
+			g_debug("the value of tly is set to :%d\n",filter->tly);
 			break;	
 		case PROP_TRX:
 			filter->trx = g_value_get_int(value);
@@ -351,7 +351,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			flag=1;
-			g_print("the value of trx is set to :%d\n",filter->trx);
+			g_debug("the value of trx is set to :%d\n",filter->trx);
 			break;	
 		case PROP_RTY:
 			filter->rty = g_value_get_int(value);
@@ -361,7 +361,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			flag=1;
-			g_print("the value of rty is set to :%d\n",filter->rty);
+			g_debug("the value of rty is set to :%d\n",filter->rty);
 			break;	
 		case PROP_BLX:
 			filter->blx = g_value_get_int(value);
@@ -371,7 +371,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			flag=1;
-			g_print("the value of blx is set to :%d\n",filter->blx);
+			g_debug("the value of blx is set to :%d\n",filter->blx);
 			break;	
 		case PROP_BLY:
 			filter->bly = g_value_get_int(value);
@@ -381,7 +381,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			flag=1;
-			g_print("the value of bly is set to :%d\n",filter->bly);
+			g_debug("the value of bly is set to :%d\n",filter->bly);
 			break;	
 		case PROP_BRX:
 			filter->brx = g_value_get_int(value);
@@ -391,7 +391,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			flag=1;
-			g_print("the value of brx is set to :%d\n",filter->brx);
+			g_debug("the value of brx is set to :%d\n",filter->brx);
 			break;	
 		case PROP_BRY:
 			filter->bry = g_value_get_int(value);
@@ -401,7 +401,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				exit(1);
 			}
 			flag=1;
-			g_print("the value of bry is set to :%d\n",filter->bry);
+			g_debug("the value of bry is set to :%d\n",filter->bry);
 			break;
 		case PROP_SWIDTH:
 			filter->swidth = g_value_get_int(value);
@@ -410,8 +410,8 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				g_warning("given swidth is invalid less than 16\n");
 				exit(1);
 			}
-			g_print("new width value to scale :%d\n",filter->swidth);
-		
+			g_debug("new width value to scale :%d\n",filter->swidth);
+
 			break;	
 		case PROP_SHEIGHT:
 			filter->sheight = g_value_get_int(value);
@@ -420,7 +420,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 				g_warning("given sheight is invalid less than 16\n");
 				exit(1);
 			}
-			g_print("new height value to scale:%d\n",filter->sheight);
+			g_debug("new height value to scale:%d\n",filter->sheight);
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -488,7 +488,6 @@ static void gst_resolution_get_property (GObject * object, guint prop_id,GValue 
 /* this function handles sink events */
 static gboolean gst_resolution_sink_event (GstPad * pad, GstObject * parent,GstEvent * event)
 {
-    //	g_print("caps event called\n");
 	GstResolution *filter;
 	gboolean ret;
 	filter = GST_RESOLUTION (parent);
@@ -510,28 +509,29 @@ static gboolean gst_resolution_sink_event (GstPad * pad, GstObject * parent,GstE
 }
 
 /* chain function
- * this function does the actual processing
+ * this function will do the actual processing
+ * of data. in the form of buffers
  */
 static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, GstBuffer * buf)
 {       
-	
-	
-	/*here checking will happen, as this plugin contains two methods to crop the incoming video
-         * we have initialised two flags which are set to ZERO initially, when properties of particular  method are set 
-         * that particular flag is set to ONE.
-         * if both flags are set to ONE indicates both methods are selected which is invalid
-         * if both the properties are not by default it uses the first method with default values
-         */
 
-        if(sflag==1 && flag==1)
-        {
-                g_warning(" BOTH THE METHODS ARE SELECTED\n");
-                g_print(" This  plugin follows two methods to crop the incoming video\n");
-                g_print("\t1.By setting x,y,width and height properties\n");
-                g_print("\t2.And providing all the four corner coordinates\n");
-                g_print("both methods properties of resolution element are set, choose only one\n");
-                return GST_FLOW_ERROR;
-        }
+
+	/*here checking will happen, as this plugin contains two methods to crop the incoming video
+	 * we have initialised two flags which are set to ZERO initially, when properties of particular  method are set 
+	 * that particular flag is set to ONE.
+	 * if both flags are set to ONE indicates both methods are selected which is invalid
+	 * if both the properties are not by default it uses the first method with default values
+	 */
+
+	if(sflag==1 && flag==1)
+	{
+		g_warning(" BOTH THE METHODS ARE SELECTED\n");
+		g_print(" This  plugin follows two methods to crop the incoming video\n");
+		g_print("\t1.By setting x,y,width and height properties\n");
+		g_print("\t2.And providing all the four corner coordinates\n");
+		g_print("both methods properties of resolution element are set, choose only one\n");
+		return GST_FLOW_ERROR;
+	}
 
 	GstResolution *filter;
 	filter = GST_RESOLUTION (parent);
@@ -552,7 +552,7 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	GstVideoFrame vframe_new;
 
 	g_print("------------------------------------------------------------------------\n");
-	
+
 	if(filter->swidth==0)
 		filter->swidth=1920;
 	if(filter->sheight==0)
@@ -578,7 +578,7 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	 * if width and heigth are given by the user to crop they will assign 
 	 * else incoming video width and height are used which copies whole data
 	 */
-	
+
 	if(filter->width==0)
 		filter->width=in_width;
 	if(filter->height==0)
@@ -598,8 +598,8 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 	if(filter->width >in_width || filter->height > in_height)
 	{
-		g_print("the incoming video width(or)height is smaller than default cropping width and height \n");
-		g_print("please inspect the element for properties 'width' and 'height'\n");
+		g_error("the incoming video width(or)height is smaller than default cropping width and height \n");
+		g_error("please inspect the element for properties 'width' and 'height'\n");
 		return GST_FLOW_ERROR;	
 	}	
 
@@ -611,7 +611,7 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	 * is store the cropped data.
 	 * flag=0 indicates normal method else second method
 	 */
-//	g_print("flag value %d\n",flag);
+	//	g_print("flag value %d\n",flag);
 	if(flag !=1)
 	{
 		caps = gst_caps_new_simple("video/x-raw",
@@ -630,8 +630,8 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 		if((filter->tly !=filter->rty) || (filter->tlx !=filter->blx) || (filter->trx!=filter->brx) || (filter->bly !=filter->bry))
 		{
-			g_print("Choosen properties values are not proper dimension to  crop a rectangle or square\n");
-			g_print("try to give the approriate coordinated\n");
+			g_warning("Given coordinate values are not proper dimension to  crop a rectangle or square\n");
+			//g_print("try to give the approriate coordinated\n");
 			return GST_FLOW_ERROR;
 		}
 
@@ -734,7 +734,7 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	gint width_org = GST_VIDEO_FRAME_WIDTH(&vframe_org);
 	gint height_org = GST_VIDEO_FRAME_HEIGHT(&vframe_org);
 
-	g_print("flag vlaue is :%d\n",flag);
+	//g_print("flag vlaue is :%d\n",flag);
 
 	/*
 	 * based on the method selected the widht height and coordinates(top left) are  calculate to copy the data
@@ -761,7 +761,7 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 		if((x+widtH)>width_org || (y+heighT)>height_org)
 		{
-			g_print("WARNING OUT OF BOUNDARY\n");
+			g_warning(" OUT OF BOUNDARY\n");
 			return GST_FLOW_ERROR;
 		}
 	}	
@@ -928,13 +928,13 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 		GstBuffer *mybuf = gst_sample_get_buffer(sample);*/
 
 	gst_pad_set_caps(filter->srcpad , incaps);
-	
+
 	/* this is used when using sample function*/
-	//gst_pad_set_caps(filter->srcpad , caps);
+	//gst_pad_set_caps(filter->srcpad , scaps);
 
 	gst_video_frame_unmap(&vframe_new);	
 	gst_video_frame_unmap(&vframe_scale);	
-	
+
 
 	/*this is used when using sample function*/
 	//return gst_pad_push (filter->srcpad, buffer_new);
