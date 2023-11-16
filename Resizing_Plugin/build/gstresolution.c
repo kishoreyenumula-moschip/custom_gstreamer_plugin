@@ -80,14 +80,14 @@ enum
 	PROP_WIDTH,
 	PROP_X,
 	PROP_Y,
-	PROP_TLX,
-	PROP_TLY,
-	PROP_TRX,
-	PROP_RTY,
-	PROP_BLX,
-	PROP_BLY,
-	PROP_BRX,
-	PROP_BRY,
+	PROP_X1,
+	PROP_X2,
+	PROP_X3,
+	PROP_X4,
+	PROP_X5,
+	PROP_X6,
+	PROP_X7,
+	PROP_X8,
 	PROP_SWIDTH,
 	PROP_SHEIGHT,
 
@@ -172,37 +172,37 @@ static void gst_resolution_class_init (GstResolutionClass * klass)
 	 * tlx and tly are the coordinates of corner from where video frame is cropped
 	 */	
 
-	g_object_class_install_property(gobject_class,PROP_TLX,
-			g_param_spec_int("tlx","TopleftX","top left x coordinate",
-				MINRANGE,MAXRANGE,TLX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_X1,
+			g_param_spec_int("x1","TopleftX","top left x coordinate",
+				MINRANGE,MAXRANGE,X1,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-	g_object_class_install_property(gobject_class,PROP_TLY,
-			g_param_spec_int("tly","TopleftY","top left y coordinate",
-				MINRANGE,MAXRANGE,TLY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_X2,
+			g_param_spec_int("x2","TopleftY","top left y coordinate",
+				MINRANGE,MAXRANGE,X2,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-	g_object_class_install_property(gobject_class,PROP_TRX,
-			g_param_spec_int("trx","ToprightX","top right x cordinate",
-				MINRANGE,MAXRANGE,TRX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_X3,
+			g_param_spec_int("x3","ToprightX","top right x cordinate",
+				MINRANGE,MAXRANGE,X3,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-	g_object_class_install_property(gobject_class,PROP_RTY,
-			g_param_spec_int("rty","ToprightY","top right y coordinate",
-				MINRANGE,MAXRANGE,RTY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_X4,
+			g_param_spec_int("x4","ToprightY","top right y coordinate",
+				MINRANGE,MAXRANGE,X4,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-	g_object_class_install_property(gobject_class,PROP_BLX,
-			g_param_spec_int("blx","BottomleftX","bottom left x coordinate",
-				MINRANGE,MAXRANGE,BLX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_X5,
+			g_param_spec_int("x5","BottomleftX","bottom left x coordinate",
+				MINRANGE,MAXRANGE,X5,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-	g_object_class_install_property(gobject_class,PROP_BLY,
-			g_param_spec_int("bly","BottomleftY","bottom left y coordinate",
-				MINRANGE,MAXRANGE,BLY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_X6,
+			g_param_spec_int("x6","BottomleftY","bottom left y coordinate",
+				MINRANGE,MAXRANGE,X6,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-	g_object_class_install_property(gobject_class,PROP_BRX,
-			g_param_spec_int("brx","BottomrightX","bottom right x coordinate",
-				MINRANGE,MAXRANGE,BRX,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_X7,
+			g_param_spec_int("x7","BottomrightX","bottom right x coordinate",
+				MINRANGE,MAXRANGE,X7,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-	g_object_class_install_property(gobject_class,PROP_BRY,
-			g_param_spec_int("bry","BottomrightY","bottom right y coordinate",
-				MINRANGE,MAXRANGE,BRY,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property(gobject_class,PROP_X8,
+			g_param_spec_int("x8","BottomrightY","bottom right y coordinate",
+				MINRANGE,MAXRANGE,X8,G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
 	/*these two properties swidth and sheight defines the desired width and height given by the user
 	 * to which the cropped video need to  resize.
@@ -260,14 +260,14 @@ static void gst_resolution_init (GstResolution * filter)
 	filter->x = DEF_X;
 	filter->y = DEF_Y;
 
-	filter->tlx= TLX;
-	filter->tly= TLY;
-	filter->tlx= TRX;
-	filter->rty= RTY;
-	filter->blx= BLX;
-	filter->bly= BLY;
-	filter->brx= BRX;
-	filter->bry= BRY;
+	filter->x1= X1;
+	filter->x2= X2;
+	filter->x3= X3;
+	filter->x4= X4;
+	filter->x5= X5;
+	filter->x6= X6;
+	filter->x7= X7;
+	filter->x8= X8;
 	filter->swidth = SWIDTH;
 	filter->sheight = SHEIGHT;
 
@@ -315,7 +315,7 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 			filter->y = g_value_get_int(value);
 			if(filter->height<0)
 			{
-				g_warning("given y is invalid\n");
+				g_warning("given y coordinate is invalid\n");
 				exit(1);
 			}
 			sflag=1;
@@ -323,85 +323,85 @@ static void gst_resolution_set_property (GObject * object, guint prop_id,const G
 			break;	
 			/* coordinate properties */
 
-		case PROP_TLX:
-			filter->tlx = g_value_get_int(value);
-			if(filter->tlx<0)
+		case PROP_X1:
+			filter->x1 = g_value_get_int(value);
+			if(filter->x1<0)
 			{
-				g_warning("given tlx is invalid\n");
+				g_warning("given value of x1 is invalid\n");
 				exit(1);
 			}
 			flag=1;
-			g_debug("the value of tlx is set to :%d\n",filter->tlx);
+			g_debug("the value of x1 is set to :%d\n",filter->x1);
 			break;	
-		case PROP_TLY:
-			filter->tly = g_value_get_int(value);
-			if(filter->tly<0)
+		case PROP_X2:
+			filter->x2 = g_value_get_int(value);
+			if(filter->x2<0)
 			{
-				g_warning("given tly is invalid\n");
+				g_warning("given value of x2 is invalid\n");
 				exit(1);
 			}
 			flag=1;
-			g_debug("the value of tly is set to :%d\n",filter->tly);
+			g_debug("the value of x2 is set to :%d\n",filter->x2);
 			break;	
-		case PROP_TRX:
-			filter->trx = g_value_get_int(value);
-			if(filter->trx<1)
+		case PROP_X3:
+			filter->x3 = g_value_get_int(value);
+			if(filter->x3<1)
 			{
-				g_warning("given trx is invalid\n");
+				g_warning("given value of x3 is invalid\n");
 				exit(1);
 			}
 			flag=1;
-			g_debug("the value of trx is set to :%d\n",filter->trx);
+			g_debug("the value of x3 is set to :%d\n",filter->x3);
 			break;	
-		case PROP_RTY:
-			filter->rty = g_value_get_int(value);
-			if(filter->rty<0)
+		case PROP_X4:
+			filter->x4 = g_value_get_int(value);
+			if(filter->x4<0)
 			{
-				g_warning("given rty is invalid\n");
+				g_warning("given value of x4 is invalid\n");
 				exit(1);
 			}
 			flag=1;
-			g_debug("the value of rty is set to :%d\n",filter->rty);
+			g_debug("the value of x4 is set to :%d\n",filter->x4);
 			break;	
-		case PROP_BLX:
-			filter->blx = g_value_get_int(value);
-			if(filter->blx<0)
+		case PROP_X5:
+			filter->x5 = g_value_get_int(value);
+			if(filter->x5<0)
 			{
-				g_warning("given blx is invalid\n");
+				g_warning("given value of x5 is invalid\n");
 				exit(1);
 			}
 			flag=1;
-			g_debug("the value of blx is set to :%d\n",filter->blx);
+			g_debug("the value of x5 is set to :%d\n",filter->x5);
 			break;	
-		case PROP_BLY:
-			filter->bly = g_value_get_int(value);
-			if(filter->bly<1)
+		case PROP_X6:
+			filter->x6 = g_value_get_int(value);
+			if(filter->x6<1)
 			{
-				g_warning("given bly is invalid\n");
+				g_warning("given values of x6 is invalid\n");
 				exit(1);
 			}
 			flag=1;
-			g_debug("the value of bly is set to :%d\n",filter->bly);
+			g_debug("the value of x6 is set to :%d\n",filter->x6);
 			break;	
-		case PROP_BRX:
-			filter->brx = g_value_get_int(value);
-			if(filter->brx<1)
+		case PROP_X7:
+			filter->x7 = g_value_get_int(value);
+			if(filter->x7<1)
 			{
-				g_warning("given brx is invalid\n");
+				g_warning("given value of x7 is invalid\n");
 				exit(1);
 			}
 			flag=1;
-			g_debug("the value of brx is set to :%d\n",filter->brx);
+			g_debug("the value of x7 is set to :%d\n",filter->x7);
 			break;	
-		case PROP_BRY:
-			filter->bry = g_value_get_int(value);
-			if(filter->bry<1)
+		case PROP_X8:
+			filter->x8 = g_value_get_int(value);
+			if(filter->x8<1)
 			{
-				g_warning("given bry is invalid\n");
+				g_warning("given value of x8 is invalid\n");
 				exit(1);
 			}
 			flag=1;
-			g_debug("the value of bry is set to :%d\n",filter->bry);
+			g_debug("the value of x8 is set to :%d\n",filter->x8);
 			break;
 		case PROP_SWIDTH:
 			filter->swidth = g_value_get_int(value);
@@ -447,29 +447,29 @@ static void gst_resolution_get_property (GObject * object, guint prop_id,GValue 
 		case PROP_Y:
 			g_value_set_int(value , filter->y);
 			break;
-		case PROP_TLX:
-			g_value_set_int(value,filter->tlx);
+		case PROP_X1:
+			g_value_set_int(value,filter->x1);
 			break;
-		case PROP_TLY:
-			g_value_set_int(value,filter->tly);
+		case PROP_X2:
+			g_value_set_int(value,filter->x2);
 			break;
-		case PROP_TRX:
-			g_value_set_int(value,filter->tlx);
+		case PROP_X3:
+			g_value_set_int(value,filter->x3);
 			break;
-		case PROP_RTY:
-			g_value_set_int(value,filter->rty);
+		case PROP_X4:
+			g_value_set_int(value,filter->x4);
 			break;
-		case PROP_BLX:
-			g_value_set_int(value,filter->blx);
+		case PROP_X5:
+			g_value_set_int(value,filter->x5);
 			break;
-		case PROP_BLY:
-			g_value_set_int(value,filter->bly);
+		case PROP_X6:
+			g_value_set_int(value,filter->x6);
 			break;
-		case PROP_BRX:
-			g_value_set_int(value,filter->brx);
+		case PROP_X7:
+			g_value_set_int(value,filter->x7);
 			break;
-		case PROP_BRY:
-			g_value_set_int(value,filter->bry);
+		case PROP_X8:
+			g_value_set_int(value,filter->x8);
 			break;
 		case PROP_SWIDTH:
 			g_value_set_int(value,filter->swidth);
@@ -575,7 +575,7 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	gst_structure_get(structure,"height",G_TYPE_INT,&in_height,NULL);
 
 	/* by default first method is selected 
-	 * if width and heigth are given by the user to crop they will assign 
+	 * if width and heigth are given by the user to crop those are used 
 	 * else incoming video width and height are used which copies whole data
 	 */
 
@@ -590,16 +590,23 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	g_print("incoming width and height are :%d %d\n",in_width,in_height);
 	g_print("croping width and height are :%d %d\n",filter->width,filter->height);
 
-	/* here a boundary is checked 
+	/* here a boundry is checked 
 	 * suppose the user desired to crop the incoming video with certain width and height
 	 * which are greater than incoming ones, it is an invalid operation
 	 */
 
 
-	if(filter->width >in_width || filter->height > in_height)
+	if(filter->width >in_width)
 	{
-		g_error("the incoming video width(or)height is smaller than default cropping width and height \n");
-		g_error("please inspect the element for properties 'width' and 'height'\n");
+		g_warning("the incoming video width is smaller than given cropping width  \n");
+		g_warning("please inspect the element for properties 'width'\n");
+		return GST_FLOW_ERROR;	
+
+	}
+	else if(filter->height > in_height)
+	{
+		g_warning("the incoming video height is smaller than  given cropping  height \n");
+		g_warning("please inspect the element for properties 'width'\n");
 		return GST_FLOW_ERROR;	
 	}	
 
@@ -628,7 +635,7 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	else{
 		/* all coordinates given by the user need to verify whether they form perfect shape or not*/
 
-		if((filter->tly !=filter->rty) || (filter->tlx !=filter->blx) || (filter->trx!=filter->brx) || (filter->bly !=filter->bry))
+		if((filter->x2 !=filter->x4) || (filter->x1 !=filter->x5) || (filter->x3!=filter->x7) || (filter->x6 !=filter->x8))
 		{
 			g_warning("Given coordinate values are not proper dimension to  crop a rectangle or square\n");
 			//g_print("try to give the approriate coordinated\n");
@@ -637,8 +644,8 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 		/* calculating width and height using coordinates*/
 
-		gint width = (filter->trx - filter->tlx);
-		gint height = (filter->bly - filter->tly);
+		gint width  = (filter->x3 - filter->x1);
+		gint height = (filter->x6 - filter->x2);
 		g_print("width and height from coordinates %d  %d\n",width,height);
 
 		caps = gst_caps_new_simple("video/x-raw",
@@ -734,7 +741,6 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	gint width_org = GST_VIDEO_FRAME_WIDTH(&vframe_org);
 	gint height_org = GST_VIDEO_FRAME_HEIGHT(&vframe_org);
 
-	//g_print("flag vlaue is :%d\n",flag);
 
 	/*
 	 * based on the method selected the widht height and coordinates(top left) are  calculate to copy the data
@@ -761,7 +767,15 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 
 		if((x+widtH)>width_org || (y+heighT)>height_org)
 		{
+			
 			g_warning(" OUT OF BOUNDARY\n");
+
+			if((x+widtH)>width_org )
+				g_warning("Given width exceded the incoming video width\n");
+			
+			if((y+heighT)>height_org)
+                                g_warning("Given height exceded the incoming video height\n");
+
 			return GST_FLOW_ERROR;
 		}
 	}	
@@ -769,10 +783,10 @@ static GstFlowReturn gst_resolution_chain (GstPad * pad, GstObject * parent, Gst
 	{
 		g_print("second method is selected\n");
 
-		widtH = (filter->trx - filter->tlx);
-		heighT = (filter->bly - filter->tly);
-		x = filter->tlx ;
-		y = filter->tly;
+		widtH  = (filter->x3 - filter->x1);
+		heighT = (filter->x6 - filter->x2);
+		x = filter->x1 ;
+		y = filter->x2;
 
 		g_print("x and y coordinates are :%d %d\n",x,y);
 		g_print("width and height from coordinates %d  %d\n",widtH,heighT);

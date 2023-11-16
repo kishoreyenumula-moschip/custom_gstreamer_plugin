@@ -64,7 +64,7 @@ struct _GstResolution
   GList *srcpadlist;
   GstPad *sinkpad, *srcpad;
   gint width,height,x,y,size;
-  gint tlx,tly,trx,rty,blx,bly,brx,bry;
+  gint x1,x2,x3,x4,x5,x6,x7,x8;
   gint swidth , sheight;
 };
 

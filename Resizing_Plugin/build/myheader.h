@@ -16,14 +16,14 @@
 #define DEF_X   0
 #define DEF_Y   0
 
-#define TLX     0
-#define TLY     0
-#define TRX     1 
-#define RTY     0
-#define BLX     0
-#define BLY     1
-#define BRX     1
-#define BRY     1
+#define X1     0
+#define X2     0
+#define X3     1 
+#define X4     0
+#define X5     0
+#define X6     1
+#define X7     1
+#define X8     1
 #define SWIDTH  0
 #define SHEIGHT 0
 #define MAXRANGE 2147483647
