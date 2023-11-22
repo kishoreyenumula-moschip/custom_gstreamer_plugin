@@ -17,20 +17,20 @@
 #define DEF_Y   0
 
 #define X1     0
-#define X2     0
-#define X3     1 
-#define X4     0
-#define X5     0
-#define X6     1
-#define X7     1
-#define X8     1
+#define Y1     0
+#define X2     1 
+#define Y2     0
+#define X3     0
+#define Y3     1
+#define X4     1
+#define Y4     1
 #define SWIDTH  0
 #define SHEIGHT 0
 #define MAXRANGE 2147483647
 #define MINRANGE -2147483648
 
 /*decalre a global flag for method selection*/
-gint flag,sflag;
+gint flag,sflag; //to check which method is selected by the user
 
 GstCaps *scaling_caps;
 
